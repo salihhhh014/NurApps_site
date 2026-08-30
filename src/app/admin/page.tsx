@@ -4,10 +4,8 @@ import { apps } from "@/config/apps";
 import { useAllGitHubData } from "@/hooks/useGitHub";
 import { useI18n } from "@/components/I18nProvider";
 import { useTheme } from "@/components/ThemeProvider";
-import { Star, GitFork, AlertCircle, Clock, RefreshCw, ExternalLink, Github, ArrowLeft, Lock } from "lucide-react";
-import { useState, useEffect } from "react";
-
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "changeme";
+import { Star, GitFork, AlertCircle, Clock, RefreshCw, ExternalLink, Github, ArrowLeft } from "lucide-react";
+import { useState } from "react";
 
 const statusColors = {
   stable: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
@@ -20,63 +18,6 @@ const statusLabels = {
   beta: { ru: "Бета", en: "Beta" },
   dev: { ru: "В разработке", en: "In Development" },
 };
-
-function AuthGate({ children }: { children: React.ReactNode }) {
-  const [authed, setAuthed] = useState(false);
-  const [input, setInput] = useState("");
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const saved = sessionStorage.getItem("nurapps-admin");
-    if (saved === ADMIN_PASSWORD) setAuthed(true);
-  }, []);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (input === ADMIN_PASSWORD) {
-      sessionStorage.setItem("nurapps-admin", input);
-      setAuthed(true);
-    } else {
-      setError(true);
-      setInput("");
-    }
-  }
-
-  if (authed) return <>{children}</>;
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-elevated p-8 text-center">
-          <div className="w-14 h-14 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-          </div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Admin Panel</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Введите пароль для доступа</p>
-          <form onSubmit={handleSubmit} className="space-y-3">
-            <input
-              type="password"
-              value={input}
-              onChange={(e) => { setInput(e.target.value); setError(false); }}
-              placeholder="Пароль"
-              autoFocus
-              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-center font-mono tracking-widest"
-            />
-            {error && (
-              <p className="text-sm text-red-500">Неверный пароль</p>
-            )}
-            <button
-              type="submit"
-              className="w-full px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold shadow-soft transition-all"
-            >
-              Войти
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function getAllRepos(): string[] {
   const repos: string[] = [];
@@ -199,7 +140,6 @@ export default function AdminPage() {
   }
 
   return (
-    <AuthGate>
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -323,6 +263,5 @@ export default function AdminPage() {
         </div>
       </main>
     </div>
-    </AuthGate>
   );
 }
