@@ -8,10 +8,10 @@ export default function News() {
   const { t, locale } = useI18n();
 
   return (
-    <section id="news" className="py-24 bg-gray-50 dark:bg-gray-900">
+    <section id="news" className="py-24 bg-gray-50/50 dark:bg-gray-900/50 geo-pattern">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t.news.title}</h2>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">{t.news.title}</h2>
           <p className="text-lg text-gray-500 dark:text-gray-400">{t.news.subtitle}</p>
         </div>
 
@@ -22,7 +22,7 @@ export default function News() {
             {news.map((item) => (
               <div
                 key={item.id}
-                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300"
+                className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700/50 p-6 hover:border-emerald-200 dark:hover:border-emerald-800/50 shadow-soft hover:shadow-elevated transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
                   <div className="text-3xl">{item.icon}</div>

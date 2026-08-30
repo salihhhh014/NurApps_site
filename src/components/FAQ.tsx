@@ -12,14 +12,14 @@ export default function FAQ() {
     <section id="faq" className="py-24 bg-white dark:bg-gray-950">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t.faq.title}</h2>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">{t.faq.title}</h2>
         </div>
 
         <div className="space-y-3">
           {t.faq.questions.map((item, i) => (
             <div
               key={i}
-              className="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden hover:border-emerald-300 dark:hover:border-emerald-700 transition-colors"
+              className="border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden hover:border-emerald-200 dark:hover:border-emerald-800/50 transition-colors duration-200 bg-gray-50/50 dark:bg-gray-900/30"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}

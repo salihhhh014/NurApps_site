@@ -17,15 +17,15 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button onClick={() => scrollTo("hero")} className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-emerald-500/25 group-hover:shadow-emerald-500/40 transition-shadow">
+          <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-lg shadow-soft group-hover:bg-emerald-700 transition-colors">
               N
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
+            <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
               NurApps
             </span>
           </button>
@@ -42,7 +42,7 @@ export default function Header() {
               <button
                 key={id}
                 onClick={() => scrollTo(id)}
-                className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-150"
               >
                 {t.nav[key as keyof typeof t.nav]}
               </button>
@@ -50,26 +50,26 @@ export default function Header() {
           </nav>
 
           {/* Controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {/* Language */}
             <button
               onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-              className="p-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all flex items-center gap-1"
+              className="p-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-150 flex items-center gap-1.5"
             >
               <Globe className="w-4 h-4" />
-              {locale.toUpperCase()}
+              <span className="hidden sm:inline">{locale.toUpperCase()}</span>
             </button>
 
             {/* Theme */}
             <div className="relative">
               <button
                 onClick={() => setThemeMenuOpen(!themeMenuOpen)}
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="p-2 text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-150"
               >
                 {theme === "light" ? <Sun className="w-5 h-5" /> : theme === "dark" ? <Moon className="w-5 h-5" /> : <Monitor className="w-5 h-5" />}
               </button>
               {themeMenuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-xl shadow-elevated border border-gray-100 dark:border-gray-800 overflow-hidden">
                   {([
                     { value: "light" as const, icon: Sun, label: locale === "ru" ? "Светлая" : "Light" },
                     { value: "dark" as const, icon: Moon, label: locale === "ru" ? "Тёмная" : "Dark" },
@@ -78,9 +78,9 @@ export default function Header() {
                     <button
                       key={value}
                       onClick={() => { setTheme(value); setThemeMenuOpen(false); }}
-                      className={`w-full px-4 py-2.5 text-sm text-left flex items-center gap-2 transition-colors ${
+                      className={`w-full px-4 py-2.5 text-sm text-left flex items-center gap-2.5 transition-colors ${
                         theme === value
-                          ? "bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400"
+                          ? "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400"
                           : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
                       }`}
                     >
@@ -95,7 +95,7 @@ export default function Header() {
             {/* Mobile Menu */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+              className="md:hidden p-2 text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-150"
             >
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -104,7 +104,7 @@ export default function Header() {
 
         {/* Mobile Nav */}
         {menuOpen && (
-          <div className="md:hidden pb-4 border-t border-gray-200 dark:border-gray-800 mt-2 pt-2">
+          <div className="md:hidden pb-4 border-t border-gray-100 dark:border-gray-800/50 mt-2 pt-2">
             {([
               { id: "hero", key: "home" },
               { id: "catalog", key: "apps" },
@@ -115,7 +115,7 @@ export default function Header() {
               <button
                 key={id}
                 onClick={() => scrollTo(id)}
-                className="block w-full text-left px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="block w-full text-left px-3 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all duration-150"
               >
                 {t.nav[key as keyof typeof t.nav]}
               </button>
