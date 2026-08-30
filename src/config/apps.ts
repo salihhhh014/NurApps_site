@@ -18,7 +18,8 @@ export interface AppInfo {
     en: string;
   };
   icon: string;
-  repo: string;
+  repo?: string;
+  repos?: { label: string; url: string }[];
   license: string;
   platforms: ("windows" | "android" | "linux" | "web" | "telegram")[];
   status: "stable" | "beta" | "dev";
@@ -50,11 +51,14 @@ export const apps: AppInfo[] = [
     id: "nurbooks",
     name: "NurBooks",
     description: {
-      ru: "Удобная программа для чтения книг с поддержкой множества форматов. Десктопная версия стабильна, мобильная в разработке.",
-      en: "Convenient book reader supporting multiple formats. Desktop version is stable, mobile in development."
+      ru: "Удобная программа для чтения книг с поддержкой множества форматов. Десктоп стабилен, мобильная версия в разработке.",
+      en: "Convenient book reader supporting multiple formats. Desktop is stable, mobile in development."
     },
     icon: "/icons/nurbooks.svg",
-    repo: "salihhhh014/NurBooks-data",
+    repos: [
+      { label: "Desktop", url: "https://github.com/NurApps/NurBooks_desktop" },
+      { label: "Mobile", url: "https://github.com/NurApps/NurBooks_mobile" },
+    ],
     license: "MIT",
     platforms: ["windows", "linux", "android"],
     status: "stable",
@@ -70,7 +74,6 @@ export const apps: AppInfo[] = [
       en: "Telegram bot for easy access to our apps and updates."
     },
     icon: "/icons/nurstore.svg",
-    repo: "",
     license: "MIT",
     platforms: ["telegram"],
     status: "stable",
@@ -86,7 +89,6 @@ export const apps: AppInfo[] = [
       en: "Powerful calculator with scientific computation support. Desktop and mobile versions in development."
     },
     icon: "/icons/byteculator.svg",
-    repo: "",
     license: "MIT",
     platforms: ["windows", "linux", "android"],
     status: "dev",

@@ -21,12 +21,9 @@ export default function AppModal({ app, onClose }: { app: AppInfo; onClose: () =
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
       <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto border border-gray-100 dark:border-gray-800">
-        {/* Header */}
         <div className="sticky top-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800 p-6 flex items-start justify-between z-10">
           <div className="flex items-center gap-4">
             <div className="w-16 h-16 rounded-2xl bg-emerald-600 flex items-center justify-center text-white text-3xl font-bold shadow-soft">
@@ -51,12 +48,8 @@ export default function AppModal({ app, onClose }: { app: AppInfo; onClose: () =
         </div>
 
         <div className="p-6 space-y-6">
-          {/* Description */}
-          <div>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{app.description[locale]}</p>
-          </div>
+          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{app.description[locale]}</p>
 
-          {/* Platforms */}
           <div>
             <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">{t.catalog.platforms}</h4>
             <div className="flex flex-wrap gap-2">
@@ -71,41 +64,61 @@ export default function AppModal({ app, onClose }: { app: AppInfo; onClose: () =
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            {app.repo && (
-              <>
-                <a
-                  href={`https://github.com/${app.repo}/releases`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold shadow-soft transition-all flex items-center justify-center gap-2"
-                >
-                  {t.catalog.download}
-                </a>
-                <a
-                  href={`https://github.com/${app.repo}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
-                >
-                  <Github className="w-5 h-5" />
-                  {t.catalog.source_code}
-                </a>
-              </>
-            )}
-            {!app.repo && app.website && (
+          {/* Single repo */}
+          {app.repo && (
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href={app.website}
+                href={`https://github.com/${app.repo}/releases`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold shadow-soft transition-all flex items-center justify-center gap-2"
               >
-                <ExternalLink className="w-5 h-5" />
-                {locale === "ru" ? "Открыть" : "Open"}
+                {t.catalog.download}
               </a>
-            )}
-          </div>
+              <a
+                href={`https://github.com/${app.repo}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
+              >
+                <Github className="w-5 h-5" />
+                {t.catalog.source_code}
+              </a>
+            </div>
+          )}
+
+          {/* Multiple repos */}
+          {app.repos && (
+            <div className="space-y-3">
+              {app.repos.map((r) => (
+                <div key={r.url} className="flex items-center gap-3">
+                  <span className="text-sm font-medium text-gray-900 dark:text-white w-20">{r.label}</span>
+                  <a
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 px-4 py-2.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Github className="w-4 h-4" />
+                    GitHub
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!app.repo && !app.repos && app.website && (
+            <a
+              href={app.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold shadow-soft transition-all text-center"
+            >
+              <ExternalLink className="w-5 h-5 inline mr-2" />
+              {locale === "ru" ? "Открыть" : "Open"}
+            </a>
+          )}
         </div>
       </div>
     </div>

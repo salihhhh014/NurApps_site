@@ -30,6 +30,12 @@ export default function Footer() {
               <Github className="w-4 h-4" />
               {t.footer.open_source}
             </a>
+            <a
+              href="/admin"
+              className="hover:text-emerald-400 transition-colors duration-150"
+            >
+              Admin
+            </a>
           </div>
         </div>
       </div>
