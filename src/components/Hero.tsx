@@ -8,9 +8,6 @@ import { motion } from "framer-motion";
 export default function Hero() {
   const { t, locale } = useI18n();
 
-  const totalDownloads = apps.reduce((acc, app) => acc + app.stats.downloads, 0);
-  const totalStars = apps.reduce((acc, app) => acc + app.stats.stars, 0);
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with subtle pattern */}
@@ -86,8 +83,6 @@ export default function Hero() {
         >
           {[
             { value: apps.length, label: t.stats.total_apps },
-            { value: totalDownloads.toLocaleString(), label: t.stats.total_downloads },
-            { value: totalStars.toLocaleString(), label: t.stats.total_stars },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
               <div className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">{value}</div>

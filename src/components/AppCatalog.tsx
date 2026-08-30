@@ -1,17 +1,27 @@
 "use client";
 
 import { useI18n } from "./I18nProvider";
-import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
 import { apps } from "@/config/apps";
 import AppModal from "./AppModal";
-import { Download, ExternalLink, Eye, Star, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
-type Platform = "all" | "windows" | "android" | "linux" | "web";
+type Platform = "all" | "windows" | "android" | "linux" | "web" | "telegram";
+
+const statusColors = {
+  stable: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+  beta: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  dev: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+};
+
+const statusLabels = {
+  stable: { ru: "Стабильная", en: "Stable" },
+  beta: { ru: "Бета", en: "Beta" },
+  dev: { ru: "В разработке", en: "Dev" },
+};
 
 export default function AppCatalog() {
   const { t, locale } = useI18n();
-  const { resolvedTheme } = useTheme();
   const [filter, setFilter] = useState<Platform>("all");
   const [search, setSearch] = useState("");
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
@@ -31,6 +41,7 @@ export default function AppCatalog() {
     { key: "android", label: t.catalog.android },
     { key: "linux", label: t.catalog.linux },
     { key: "web", label: t.catalog.web },
+    { key: "telegram", label: "Telegram" },
   ];
 
   return (
@@ -91,15 +102,15 @@ export default function AppCatalog() {
                       {app.name.charAt(0)}
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-200">
-                        {app.name}
-                      </h3>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-700 text-xs font-mono">
-                          {app.license}
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-200">
+                          {app.name}
+                        </h3>
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColors[app.status]}`}>
+                          {statusLabels[app.status][locale]}
                         </span>
-                        <span className="text-xs">v{app.latestVersion}</span>
                       </div>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 font-mono">{app.license}</span>
                     </div>
                   </div>
 
@@ -107,7 +118,7 @@ export default function AppCatalog() {
                     {app.description[locale]}
                   </p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-4">
+                  <div className="flex flex-wrap gap-1.5">
                     {app.platforms.map((p) => (
                       <span
                         key={p}
@@ -116,21 +127,6 @@ export default function AppCatalog() {
                         {p}
                       </span>
                     ))}
-                  </div>
-
-                  <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700/50">
-                    <span className="flex items-center gap-1.5">
-                      <Download className="w-3.5 h-3.5" />
-                      {app.stats.downloads.toLocaleString()}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <Eye className="w-3.5 h-3.5" />
-                      {app.stats.views.toLocaleString()}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <Star className="w-3.5 h-3.5" />
-                      {app.stats.stars}
-                    </span>
                   </div>
                 </div>
               ))}
