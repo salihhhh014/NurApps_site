@@ -2,131 +2,245 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --color-emerald-50: #ecfdf5;
-  --color-emerald-100: #d1fae5;
-  --color-emerald-200: #a7f3d0;
-  --color-emerald-300: #6ee7b7;
-  --color-emerald-400: #34d399;
-  --color-emerald-500: #10b981;
-  --color-emerald-600: #059669;
-  --color-emerald-700: #047857;
-  --color-emerald-800: #065f46;
-  --color-emerald-900: #064e3b;
-  --color-emerald-950: #022c22;
+@theme {
+  --color-paper: #f7f5f0;
+  --color-paper-deep: #efe9dc;
+  --color-ink: #191917;
+  --color-ink-soft: #4a4843;
+  --color-ink-faint: #8a867c;
+  --color-line: #ddd5c3;
+  --color-pine: #0e3b2e;
+  --color-pine-deep: #0a2b21;
+  --color-amber: #e8b44a;
+  --color-amber-soft: #f5dfae;
+  --color-night: #141310;
+  --color-night-soft: #1e1d19;
+  --color-night-line: #33322c;
 
-  --color-teal-500: #14b8a6;
-  --color-teal-600: #0d9488;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Menlo, monospace;
+}
+
+:root {
+  color-scheme: light dark;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring-soft: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-soft: 0 8px 32px -12px rgba(0,0,0,0.18), 0 2px 8px -2px rgba(0,0,0,0.08);
+  --shadow-lift: 0 16px 48px -16px rgba(0,0,0,0.28), 0 4px 16px -4px rgba(0,0,0,0.12);
+  --radius-xl: 20px;
+  --radius-lg: 16px;
 }
 
 * {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html {
+  scroll-padding-top: 88px;
+}
+
 body {
-  font-family: var(--font-body), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  text-underline-offset: 3px;
+  font-feature-settings: "ss01", "tnum" 0;
+  /* бумага: едва заметное зерно, а не градиентные пятна */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), system-ui, sans-serif;
+.dark body {
+  background: var(--color-night);
+  color: #ece7d9;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+h1, h2, h3 {
+  font-family: var(--font-display), Georgia, serif;
+  text-wrap: balance;
+  letter-spacing: -0.015em;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+p {
+  text-wrap: pretty;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #4b5563;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
-}
-
-/* Line clamp */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Selection */
 ::selection {
-  background-color: #059669;
-  color: white;
+  background: var(--color-pine);
+  color: var(--color-paper);
 }
-
 .dark ::selection {
-  background-color: #34d399;
-  color: #022c22;
+  background: var(--color-amber);
+  color: var(--color-night);
 }
 
-/* Focus ring */
-*:focus-visible {
-  outline: 2px solid #059669;
+:focus-visible {
+  outline: 2px solid var(--color-pine);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.dark :focus-visible {
+  outline-color: var(--color-amber);
+}
+
+/* тонкий аккуратный скроллбар в цветах бумаги */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #c9c0aa;
+  border-radius: 8px;
+  border: 2px solid var(--color-paper);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #44433b;
+  border-color: var(--color-night);
+}
+
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--font-mono), ui-monospace, monospace; }
+
+.rule {
+  border-color: var(--color-line);
+}
+.dark .rule {
+  border-color: var(--color-night-line);
+}
+
+.stamp {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 3px 10px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: -60px;
+  left: 16px;
+  z-index: 200;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 12px; }
+
+section { scroll-margin-top: 84px; }
+
+input, button { font: inherit; }
+
+/* Редакционная ссылка: тонкое подчёркивание вместо жирного маркера */
+.u-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, var(--color-amber) 70%, transparent);
+  transition: text-decoration-color 0.2s ease, background-color 0.2s ease;
+}
+.u-link:hover {
+  text-decoration-color: var(--color-amber);
+}
+
+/* Стартап-сетка: точечная сетка как у Linear/Vercel — едва заметна */
+.grid-dot {
+  background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--color-ink) 7%, transparent) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+.dark .grid-dot {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+}
+/* Тонкая рамка-карточка со стартап-тенью */
+.card-startup {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-paper) 92%, white);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.28s var(--ease-out-expo), transform 0.28s var(--ease-out-expo), border-color 0.28s ease;
+}
+.dark .card-startup {
+  border-color: var(--color-night-line);
+  background: color-mix(in srgb, var(--color-night-soft) 92%, white 2%);
+}
+.card-startup:hover {
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-line) 60%, var(--color-ink) 20%);
+}
+.dark .card-startup:hover {
+  border-color: #3d3c35;
+}
+/* Глоу акцент для CTA */
+.glow-amber {
+  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--color-amber) 55%, transparent), 0 2px 8px -4px rgba(0,0,0,0.12);
+}
+/* Progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-amber);
+  transform-origin: left;
+  z-index: 60;
+}
+
+/* Панель каталога: аккуратный сдвиг строки, а не только смена фона */
+.row-lift {
+  transition: background-color 0.22s var(--ease-out-expo), transform 0.22s var(--ease-out-expo);
+}
+.row-lift:hover .row-arrow {
+  transform: translate(2px, -2px);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-color: var(--color-ink);
+}
+.dark .row-lift:hover .row-arrow {
+  background: var(--color-paper);
+  color: var(--color-night);
+  border-color: var(--color-paper);
+}
+.row-arrow {
+  transition: transform 0.25s var(--ease-out-expo), background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Выпадашки и модалка: один затухающий подъём, уважает reduced-motion через MotionConfig */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); filter: blur(2px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.anim-rise { animation: rise-in 0.32s var(--ease-out-expo) both; }
+.anim-fade { animation: fade-in 0.22s ease both; }
+.anim-modal { animation: rise-in 0.38s var(--ease-out-expo) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-rise, .anim-fade, .anim-modal { animation: none; }
+}
+/* Focus: видимый ринг как у стартапов — тонкий, не жирный */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-pine);
   outline-offset: 2px;
-  border-radius: 4px;
-}
-
-.dark *:focus-visible {
-  outline-color: #34d399;
-}
-
-/* Subtle grain texture */
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
-}
-
-/* Geometric pattern for sections */
-.geo-pattern {
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(5, 150, 105, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(20, 184, 166, 0.03) 0%, transparent 50%);
-}
-
-.dark .geo-pattern {
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(52, 211, 153, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(20, 184, 166, 0.03) 0%, transparent 50%);
-}
-
-/* Refined shadow system */
-.shadow-soft {
-  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
-}
-
-.shadow-elevated {
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 2px 10px -2px rgba(0, 0, 0, 0.04);
-}
-
-.dark .shadow-soft {
-  box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.3), 0 10px 20px -2px rgba(0, 0, 0, 0.2);
-}
-
-.dark .shadow-elevated {
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 2px 10px -2px rgba(0, 0, 0, 0.3);
 }

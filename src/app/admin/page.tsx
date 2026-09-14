@@ -4,7 +4,7 @@ import { apps } from "@/config/apps";
 import { useAllGitHubData } from "@/hooks/useGitHub";
 import { useI18n } from "@/components/I18nProvider";
 import { useTheme } from "@/components/ThemeProvider";
-import { Star, GitFork, AlertCircle, Clock, RefreshCw, ExternalLink, Github, ArrowLeft } from "lucide-react";
+import { Star, GitFork, AlertCircle, Clock, RefreshCw, ExternalLink, Github, ArrowLeft, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 
 const statusColors = {
@@ -164,9 +164,10 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label={locale === "ru" ? "Переключить тему" : "Toggle theme"}
                 className="p-2 text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all"
               >
-                {theme === "dark" ? "☀️" : "🌙"}
+                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             </div>
           </div>

@@ -41,31 +41,90 @@ export interface GitHubCommit {
 
 const GITHUB_API = "https://api.github.com";
 
-export async function fetchRepo(owner: string, repo: string): Promise<GitHubRepo | null> {
+// Простое in-memory кэширование, чтобы не упираться в лимит 60 запр/час
+// для анонимных запросов и не дёргать API на каждый ре-рендер.
+const cache = new Map<string, { at: number; data: unknown }>();
+const CACHE_TTL = 5 * 60 * 1000;
+
+function cached<T>(key: string): T | null {
+  const hit = cache.get(key);
+  if (!hit) return null;
+  if (Date.now() - hit.at > CACHE_TTL) {
+    cache.delete(key);
+    return null;
+  }
+  return hit.data as T;
+}
+
+function put(key: string, data: unknown) {
+  if (cache.size > 200) cache.clear();
+  cache.set(key, { at: Date.now(), data });
+}
+
+async function ghFetch(path: string): Promise<Response | null> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch(`${GITHUB_API}/repos/${owner}/${repo}`);
-    if (!res.ok) return null;
-    return res.json();
+    const headers: Record<string, string> = {
+      Accept: "application/vnd.github.v3+json",
+      "User-Agent": "NurApps-site",
+    };
+    const token =
+      process.env.NEXT_PUBLIC_GITHUB_TOKEN ||
+      process.env.GITHUB_TOKEN;
+    if (token) headers.Authorization = `Bearer ${token}`;
+    return await fetch(`${GITHUB_API}${path}`, {
+      headers,
+      signal: controller.signal,
+      next: { revalidate: 300 },
+    });
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export async function fetchRepo(owner: string, repo: string): Promise<GitHubRepo | null> {
+  const key = `repo:${owner}/${repo}`;
+  const hit = cached<GitHubRepo>(key);
+  if (hit) return hit;
+  try {
+    const res = await ghFetch(`/repos/${owner}/${repo}`);
+    if (!res || !res.ok) return null;
+    const data = (await res.json()) as GitHubRepo;
+    put(key, data);
+    return data;
   } catch {
     return null;
   }
 }
 
 export async function fetchReleases(owner: string, repo: string, limit = 5): Promise<GitHubRelease[]> {
+  const key = `releases:${owner}/${repo}:${limit}`;
+  const hit = cached<GitHubRelease[]>(key);
+  if (hit) return hit;
   try {
-    const res = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/releases?per_page=${limit}`);
-    if (!res.ok) return [];
-    return res.json();
+    const res = await ghFetch(`/repos/${owner}/${repo}/releases?per_page=${limit}`);
+    if (!res || !res.ok) return [];
+    const data = (await res.json()) as GitHubRelease[];
+    put(key, data);
+    return data;
   } catch {
     return [];
   }
 }
 
 export async function fetchRecentCommits(owner: string, repo: string, limit = 10): Promise<GitHubCommit[]> {
+  const key = `commits:${owner}/${repo}:${limit}`;
+  const hit = cached<GitHubCommit[]>(key);
+  if (hit) return hit;
   try {
-    const res = await fetch(`${GITHUB_API}/repos/${owner}/${repo}/commits?per_page=${limit}`);
-    if (!res.ok) return [];
-    return res.json();
+    const res = await ghFetch(`/repos/${owner}/${repo}/commits?per_page=${limit}`);
+    if (!res || !res.ok) return [];
+    const data = (await res.json()) as GitHubCommit[];
+    put(key, data);
+    return data;
   } catch {
     return [];
   }

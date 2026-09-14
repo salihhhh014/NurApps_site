@@ -55,24 +55,43 @@ export function useGitHub(repoStr: string): AppGitHubData {
 
 export function useAllGitHubData(repos: string[]) {
   const [results, setResults] = useState<Record<string, AppGitHubData>>({});
+  const key = repos.filter(Boolean).sort().join(",");
 
   useEffect(() => {
-    const validRepos = repos.filter(Boolean);
+    const validRepos = key ? key.split(",") : [];
     if (validRepos.length === 0) return;
 
     let cancelled = false;
+    const controller = new AbortController();
 
     async function loadAll() {
+      // Показываем скелетон только для тех, кого ещё нет в выдаче.
+      setResults((prev) => {
+        const next = { ...prev };
+        for (const r of validRepos) {
+          if (!next[r]) {
+            next[r] = { repo: null, releases: [], commits: [], loading: true, error: null };
+          }
+        }
+        return next;
+      });
+
       const entries = await Promise.all(
         validRepos.map(async (repoStr) => {
           const parsed = parseRepoString(repoStr);
-          if (!parsed) return [repoStr, { repo: null, releases: [], commits: [], loading: false, error: "Invalid repo" }] as const;
-          const [repo, releases, commits] = await Promise.all([
-            fetchRepo(parsed.owner, parsed.repo),
-            fetchReleases(parsed.owner, parsed.repo),
-            fetchRecentCommits(parsed.owner, parsed.repo),
-          ]);
-          return [repoStr, { repo, releases, commits, loading: false, error: null }] as const;
+          if (!parsed || controller.signal.aborted) {
+            return [repoStr, { repo: null, releases: [], commits: [], loading: false, error: "Invalid repo" }] as const;
+          }
+          try {
+            const [repo, releases, commits] = await Promise.all([
+              fetchRepo(parsed.owner, parsed.repo),
+              fetchReleases(parsed.owner, parsed.repo),
+              fetchRecentCommits(parsed.owner, parsed.repo),
+            ]);
+            return [repoStr, { repo, releases, commits, loading: false, error: null }] as const;
+          } catch {
+            return [repoStr, { repo: null, releases: [], commits: [], loading: false, error: "Network error" }] as const;
+          }
         })
       );
       if (!cancelled) {
@@ -81,8 +100,12 @@ export function useAllGitHubData(repos: string[]) {
     }
 
     loadAll();
-    return () => { cancelled = true; };
-  }, [repos.join(",")]);
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   return results;
 }

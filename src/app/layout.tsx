@@ -1,22 +1,40 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, DM_Sans } from "next/font/google";
+import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const display = Fraunces({
   subsets: ["latin", "latin-ext"],
   variable: "--font-display",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  subsets: ["latin", "latin-ext"],
+const body = Inter({
+  subsets: ["latin", "latin-ext", "cyrillic"],
   variable: "--font-body",
   display: "swap",
 });
 
+const mono = JetBrains_Mono({
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "NurApps",
-  description: "NurApps — каталог приложений с открытым исходным кодом",
+  title: "NurApps — программы, которые можно прочитать",
+  description:
+    "Небольшая мастерская открытого кода: мессенджер, читалка, бот с релизами. Исходники на GitHub, без трекеров.",
+  metadataBase: new URL("https://nurapps.dev"),
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "NurApps — программы, которые можно прочитать",
+    description: "Открытый код без мелкого шрифта. 4 проекта, исходники на GitHub.",
+    type: "website",
+    locale: "ru_RU",
+  },
+  robots: { index: true, follow: true },
+  icons: { icon: "/favicon.svg" },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -26,7 +44,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable} bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased`}>
+      <head>
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
+        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
+      </head>
+      <body
+        className={`${display.variable} ${body.variable} ${mono.variable} bg-paper text-ink antialiased`}
+      >
+        <a href="#main" className="skip-link">
+          Перейти к содержимому
+        </a>
         {children}
       </body>
     </html>

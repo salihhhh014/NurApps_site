@@ -13,6 +13,10 @@ export interface AppVersion {
 export interface AppInfo {
   id: string;
   name: string;
+  tagline: {
+    ru: string;
+    en: string;
+  };
   description: {
     ru: string;
     en: string;
@@ -25,6 +29,7 @@ export interface AppInfo {
   status: "stable" | "beta" | "dev";
   category: string;
   website?: string;
+  telegram?: string;
   latestVersion: string;
   versions: AppVersion[];
 }
@@ -33,9 +38,13 @@ export const apps: AppInfo[] = [
   {
     id: "nurchat",
     name: "NurChat",
+    tagline: {
+      ru: "Мессенджер, который не читает вас",
+      en: "A messenger that doesn't read you",
+    },
     description: {
-      ru: "Безопасный мессенджер с сквозным шифрованием и открытым исходным кодом. Бета-версия.",
-      en: "Secure messenger with end-to-end encryption and open-source code. Beta version."
+      ru: "Сквозное шифрование, никаких телефонов в базе для чтения. Сейчас — публичная бета: веб работает, десктоп и Android догоняют.",
+      en: "End-to-end encryption, no phone harvesting. Now in public beta: web works, desktop and Android are catching up."
     },
     icon: "/icons/nurchat.svg",
     repo: "NurApps/NurChat",
@@ -50,9 +59,13 @@ export const apps: AppInfo[] = [
   {
     id: "nurbooks",
     name: "NurBooks",
+    tagline: {
+      ru: "Читалка без мусора",
+      en: "A reader without clutter",
+    },
     description: {
-      ru: "Удобная программа для чтения книг с поддержкой множества форматов. Десктоп стабилен, мобильная версия в разработке.",
-      en: "Convenient book reader supporting multiple formats. Desktop is stable, mobile in development."
+      ru: "EPUB, FB2, PDF — с запоминанием места и ночной темой. Десктоп можно ставить, мобильная версия ещё собирается.",
+      en: "EPUB, FB2, PDF — with reading position and night mode. Desktop is installable, mobile is still being built."
     },
     icon: "/icons/nurbooks.svg",
     repos: [
@@ -69,24 +82,33 @@ export const apps: AppInfo[] = [
   {
     id: "nurstore",
     name: "NurStore",
+    tagline: {
+      ru: "Все релизы — в одном боте",
+      en: "Every release in one bot",
+    },
     description: {
-      ru: "Telegram-бот для удобного доступа к нашим приложениям и обновлениям.",
-      en: "Telegram bot for easy access to our apps and updates."
+      ru: "Telegram-бот: присылает сборки и новости обновлений, когда не хочется следить за GitHub.",
+      en: "Telegram bot: sends builds and update notes for those who don't want to watch GitHub."
     },
     icon: "/icons/nurstore.svg",
     license: "MIT",
     platforms: ["telegram"],
     status: "stable",
     category: "tools",
+    telegram: "https://t.me/nurapps_bot",
     latestVersion: "1.0.0",
     versions: []
   },
   {
     id: "byteculator",
     name: "Byteculator",
+    tagline: {
+      ru: "Калькулятор для тех, кто считает",
+      en: "A calculator for people who count",
+    },
     description: {
-      ru: "Мощный калькулятор с поддержкой научных вычислений. Десктоп и мобильная версии в разработке.",
-      en: "Powerful calculator with scientific computation support. Desktop and mobile versions in development."
+      ru: "Инженерные функции и история вычислений. Пока черновик: исходников ещё нет, скачать нечего — но можно следить.",
+      en: "Engineering functions and history. Still a draft: no public source yet, nothing to download — but worth watching."
     },
     icon: "/icons/byteculator.svg",
     license: "MIT",

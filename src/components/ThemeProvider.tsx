@@ -22,11 +22,19 @@ export function useTheme() {
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("system");
-  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("dark");
+  const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("nurapps-theme") as Theme | null;
-    if (saved) setTheme(saved);
+    try {
+      const saved = localStorage.getItem("nurapps-theme") as Theme | null;
+      if (saved === "light" || saved === "dark" || saved === "system") {
+        setTheme(saved);
+      }
+    } catch {
+      // приватный режим — остаёмся на системной теме
+    }
+    setMounted(true);
   }, []);
 
   useEffect(() => {
@@ -46,7 +54,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   function handleSetTheme(t: Theme) {
     setTheme(t);
-    localStorage.setItem("nurapps-theme", t);
+    try {
+      localStorage.setItem("nurapps-theme", t);
+    } catch {
+      // ignore
+    }
+  }
+
+  // До монтирования не красим ничего, чтобы не было вспышки чужой темы.
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, resolvedTheme }}>
+        <span style={{ visibility: "hidden" }}>{children}</span>
+      </ThemeContext.Provider>
+    );
   }
 
   return (

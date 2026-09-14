@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Locale, getDictionary } from "@/lib/i18n";
 
 interface I18nContextType {
@@ -22,9 +22,30 @@ export function useI18n() {
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("ru");
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("nurapps-locale") as Locale | null;
+      if (saved === "ru" || saved === "en") setLocaleState(saved);
+      else {
+        const nav = navigator.language.toLowerCase();
+        if (nav.startsWith("en")) setLocaleState("en");
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
+
   function setLocale(l: Locale) {
     setLocaleState(l);
-    localStorage.setItem("nurapps-locale", l);
+    try {
+      localStorage.setItem("nurapps-locale", l);
+    } catch {
+      // ignore
+    }
   }
 
   const t = getDictionary(locale);

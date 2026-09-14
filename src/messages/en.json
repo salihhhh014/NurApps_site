@@ -1,100 +1,115 @@
 {
   "meta": {
-    "title": "NurApps",
-    "description": "NurApps — catalog of open-source applications"
+    "title": "NurApps — software you can read",
+    "description": "A small open-source workshop: messenger, reader, release bot. Sources on GitHub, no trackers."
   },
   "nav": {
-    "home": "Home",
+    "home": "Top",
     "apps": "Apps",
     "faq": "FAQ",
     "news": "News",
-    "about": "About"
+    "about": "Workshop"
   },
   "hero": {
-    "title": "NurApps",
-    "subtitle": "Open-source applications",
-    "description": "We create free software for everyone. All our apps are available on GitHub and distributed under open licenses.",
-    "github": "GitHub",
-    "explore_apps": "Explore Apps"
+    "title": "Software you can read",
+    "subtitle": "Open source without fine print",
+    "description": "We are NurApps. We make plain apps with public sources: you can download, inspect and build them yourself. Four projects, three licenses, zero trackers.",
+    "github": "Browse GitHub",
+    "explore_apps": "Pick an app",
+    "meta": "4 projects · MIT / AGPL · RU / EN",
+    "note": "Honest labels: beta means beta, and when there is nothing to download we say so."
   },
   "about": {
-    "title": "About Us",
-    "content": "NurApps is a team of developers building high-quality open-source applications. Our mission is to make technology accessible to everyone. All our projects are distributed under open licenses, and we welcome community contributions.",
-    "values_title": "Our Values",
+    "title": "A workshop, not a corporation",
+    "content": "NurApps is a few developers tired of apps that read you faster than you read them. We ship slowly, publish sources first, and don't promise what isn't there.",
+    "values_title": "How we work",
     "values": [
-      "Open source — transparency and trust",
-      "Accessibility — apps for all platforms",
-      "Community — collaborative development",
-      "Quality — testing and stability"
+      "Sources first — code before announcements",
+      "No surveillance — no analytics to sell",
+      "Old machines welcome — light builds for Windows and Linux",
+      "We answer in Issues — slowly, but like humans"
     ]
   },
   "catalog": {
-    "title": "Our Apps",
-    "subtitle": "Discover our projects",
+    "title": "Apps",
+    "subtitle": "Four of them. Each with an honest status.",
     "all": "All",
     "windows": "Windows",
     "android": "Android",
     "linux": "Linux",
     "web": "Web",
-    "view_details": "Details",
-    "download": "Download",
-    "source_code": "Source Code",
+    "view_details": "What's inside",
+    "download": "Get it on GitHub",
+    "open_bot": "Open the bot",
+    "watch": "Watch on GitHub",
+    "source_code": "Sources",
     "requirements": "System Requirements",
     "license": "License",
     "versions": "Versions",
     "latest_version": "Latest Version",
     "old_versions": "Old Versions",
     "close": "Close",
-    "platforms": "Platforms",
+    "platforms": "Runs on",
     "size": "Size",
     "views": "Views",
-    "downloads": "Downloads"
+    "downloads": "Downloads",
+    "found": "Found",
+    "reset": "Reset",
+    "empty_title": "Nothing here — and that's fine",
+    "empty_hint": "Try another word or reset the filter.",
+    "no_releases": "No releases mirrored here yet — grab them straight from GitHub, it's fresher there.",
+    "dev_note": "This is a draft. Nothing to download yet, sources will appear — follow updates.",
+    "status_stable": "Ready to install",
+    "status_beta": "Beta",
+    "status_dev": "Draft"
   },
   "faq": {
-    "title": "Frequently Asked Questions",
+    "title": "Questions people ask",
     "questions": [
       {
-        "q": "What is NurApps?",
-        "a": "NurApps is a team of developers creating free open-source applications for various platforms."
+        "q": "Is it really free? What's the catch?",
+        "a": "Yes, free. No catch: the code is open, the license lets you use and modify it. We plan to earn on support and donations, not on data."
       },
       {
-        "q": "Are the apps free?",
-        "a": "Yes, all our apps are completely free and distributed under open licenses (MIT, GPL, AGPL)."
+        "q": "What do beta and draft mean?",
+        "a": "Beta works but may break and updates often. Draft has nothing to download yet. We label statuses honestly so you don't expect stability where there is none."
       },
       {
-        "q": "How can I contribute?",
-        "a": "You can fork our repository on GitHub, make changes, and create a Pull Request. We review all contributions."
+        "q": "Where do I download if there is no button?",
+        "a": "All builds live in Releases on GitHub. The download button leads straight there. NurStore is a Telegram bot — its button opens the chat."
       },
       {
-        "q": "Which platforms are supported?",
-        "a": "Our apps are available for Windows, Android, Linux, and web browsers. Each app lists its supported platforms."
+        "q": "How do I report a bug or suggest a fix?",
+        "a": "Open Issues in the right repository: what you did, what you expected, what happened. A screenshot and OS version speed things up."
       },
       {
-        "q": "How do I report a bug?",
-        "a": "Go to the Issues section of the corresponding GitHub repository and create a new issue describing the problem."
+        "q": "Can I help without coding?",
+        "a": "Yes: translations, error texts, testing on old hardware, triaging Issues. Write into any repo and we'll point you where to start."
       },
       {
-        "q": "How often are updates released?",
-        "a": "We release updates as needed. All updates are automatically reflected on the website."
+        "q": "Why is there no news?",
+        "a": "Because we didn't invent any. Once a release ships, an entry appears. Until then the section stays hidden instead of showing a placeholder."
       }
     ]
   },
   "news": {
-    "title": "NurApps News",
-    "subtitle": "Latest events and updates",
+    "title": "News",
+    "subtitle": "Only what matters: releases and important fixes",
     "read_more": "Read more",
-    "no_news": "No news yet"
+    "no_news": "Quiet for now — we're writing code, not news"
   },
   "footer": {
-    "copyright": "NurApps. All rights reserved.",
-    "made_with": "Made with",
-    "open_source": "Open Source",
-    "contact": "Contact"
+    "copyright": "NurApps",
+    "made_with": "Hand-built, no trackers",
+    "open_source": "GitHub",
+    "contact": "Contact",
+    "telegram": "Telegram channel",
+    "rights": "Code is under open licenses. Site texts may be retold with a link."
   },
   "stats": {
-    "total_apps": "Apps",
+    "total_apps": "apps",
     "total_downloads": "Downloads",
-    "total_stars": "GitHub Stars",
+    "total_stars": "GitHub stars",
     "active_devs": "Developers"
   }
 }
