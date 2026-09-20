@@ -62,41 +62,41 @@ export default function Header() {
 
   return (
     <motion.header
-      animate={{ y: hidden ? -72 : 0 }}
-      transition={{ type: "spring", stiffness: 420, damping: 34 }}
-      className={`fixed top-0 left-0 right-0 z-50 border-b rule backdrop-blur supports-[backdrop-filter]:bg-paper/85 dark:supports-[backdrop-filter]:bg-night/85 bg-paper/95 dark:bg-night/95 transition-shadow duration-300 ${scrolled ? "shadow-[0_12px_32px_-20px_rgba(0,0,0,0.35)]" : ""}`}
+      animate={{ y: hidden ? -64 : 0 }}
+      transition={{ type: "spring", stiffness: 400, damping: 34 }}
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-border backdrop-blur supports-[backdrop-filter]:bg-bg/80 dark:supports-[backdrop-filter]:bg-night/80 bg-bg/95 dark:bg-night/95 transition-shadow duration-200 ${scrolled ? "shadow-[0_1px_3px_rgba(0,0,0,0.08)]" : ""}`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-[68px]">
-          <button onClick={() => scrollTo("hero")} className="flex items-center gap-3 text-left cursor-pointer group" aria-label="NurApps — наверх">
-            <span className="w-9 h-9 bg-ink dark:bg-paper text-paper dark:text-night flex items-center justify-center font-display font-bold text-xl rounded-[10px] leading-none pt-[1px] transition-transform duration-200 group-hover:scale-[1.02] group-active:scale-[0.98]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14">
+          <button onClick={() => scrollTo("hero")} className="flex items-center gap-2.5 text-left cursor-pointer group" aria-label="NurApps — наверх">
+            <span className="w-8 h-8 bg-fg text-bg flex items-center justify-center font-bold text-sm rounded-md leading-none transition-transform duration-150 group-hover:scale-105 group-active:scale-95">
               N
             </span>
             <span className="leading-tight">
-              <span className="block font-bold text-[17px] tracking-tight">NurApps</span>
-              <span className="block text-[12px] text-ink-soft dark:text-[#a39e8f]">{locale === "ru" ? "мастерская открытого кода" : "open-source workshop"}</span>
+              <span className="block font-semibold text-[15px] tracking-[-0.01em]">NurApps</span>
+              <span className="block text-[11px] text-fg-muted">{locale === "ru" ? "открытый код" : "open source"}</span>
             </span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-1" aria-label="Навигация">
+          <nav className="hidden md:flex items-center gap-0.5" aria-label="Навигация">
             {links.map(({ id, key }) => (
               <button
                 key={id}
                 onClick={() => scrollTo(id)}
-                className="px-3 py-2 text-[14.5px] font-medium text-ink-soft dark:text-[#cfc9b8] hover:text-ink dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-[14px] text-fg-secondary hover:text-fg rounded-md hover:bg-bg-secondary transition-colors cursor-pointer"
               >
                 {t.nav[key as keyof typeof t.nav]}
               </button>
             ))}
           </nav>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             <button
               onClick={() => setLocale(locale === "ru" ? "en" : "ru")}
-              className="h-10 px-3 text-[13px] font-medium text-ink-soft dark:text-[#cfc9b8] hover:text-ink dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/10 transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="h-8 px-2.5 text-[12px] font-medium text-fg-secondary hover:text-fg rounded-md hover:bg-bg-secondary transition-colors flex items-center gap-1.5 cursor-pointer"
               aria-label={locale === "ru" ? "Переключить на английский" : "Switch to Russian"}
             >
-              <Globe className="w-4 h-4" aria-hidden />
+              <Globe className="w-3.5 h-3.5" aria-hidden />
               {locale.toUpperCase()}
             </button>
 
@@ -106,19 +106,19 @@ export default function Header() {
                 aria-expanded={themeOpen}
                 aria-haspopup="menu"
                 aria-label={locale === "ru" ? "Тема оформления" : "Color theme"}
-                className="w-10 h-10 flex items-center justify-center text-ink-soft dark:text-[#cfc9b8] hover:text-ink dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                className="w-8 h-8 flex items-center justify-center text-fg-secondary hover:text-fg rounded-md hover:bg-bg-secondary transition-colors cursor-pointer"
               >
-                {theme === "light" ? <Sun className="w-5 h-5" aria-hidden /> : theme === "dark" ? <Moon className="w-5 h-5" aria-hidden /> : <Monitor className="w-5 h-5" aria-hidden />}
+                {theme === "light" ? <Sun className="w-4 h-4" aria-hidden /> : theme === "dark" ? <Moon className="w-4 h-4" aria-hidden /> : <Monitor className="w-4 h-4" aria-hidden />}
               </button>
               <AnimatePresence>
                 {themeOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    transition={{ duration: 0.18 }}
                     role="menu"
-                    className="absolute right-0 mt-2 w-44 bg-paper dark:bg-night-soft rounded-xl border rule shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] overflow-hidden py-1"
+                    className="absolute right-0 mt-2 w-40 bg-bg dark:bg-night-soft rounded-lg border border-border shadow-[0_4px_12px_rgba(0,0,0,0.12)] overflow-hidden py-1"
                   >
                     {(
                       [
@@ -134,11 +134,11 @@ export default function Header() {
                           setTheme(value);
                           setThemeOpen(false);
                         }}
-                        className={`w-full px-4 py-2.5 text-sm text-left flex items-center gap-2.5 transition-colors cursor-pointer ${
-                          theme === value ? "bg-pine/10 dark:bg-amber/15 text-pine dark:text-amber font-medium" : "text-ink-soft dark:text-[#cfc9b8] hover:bg-ink/5 dark:hover:bg-white/10"
+                        className={`w-full px-3 py-2 text-[13px] text-left flex items-center gap-2 transition-colors cursor-pointer ${
+                          theme === value ? "bg-accent/10 text-accent font-medium" : "text-fg-secondary hover:bg-bg-secondary"
                         }`}
                       >
-                        <Icon className="w-4 h-4" aria-hidden />
+                        <Icon className="w-3.5 h-3.5" aria-hidden />
                         {label}
                       </button>
                     ))}
@@ -151,10 +151,10 @@ export default function Header() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
               aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"}
-              className="md:hidden w-10 h-10 flex items-center justify-center text-ink-soft dark:text-[#cfc9b8] rounded-lg hover:bg-ink/5 dark:hover:bg-white/10 cursor-pointer"
+              className="md:hidden w-8 h-8 flex items-center justify-center text-fg-secondary rounded-md hover:bg-bg-secondary cursor-pointer"
             >
               <AnimatePresence mode="wait" initial={false}>
-                {menuOpen ? <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }}><X className="w-5 h-5" aria-hidden /></motion.span> : <motion.span key="m" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }}><Menu className="w-5 h-5" aria-hidden /></motion.span>}
+                {menuOpen ? <motion.span key="x" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }}><X className="w-4 h-4" aria-hidden /></motion.span> : <motion.span key="m" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }}><Menu className="w-4 h-4" aria-hidden /></motion.span>}
               </AnimatePresence>
             </button>
           </div>
@@ -166,19 +166,19 @@ export default function Header() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="md:hidden overflow-hidden border-t rule"
+              transition={{ duration: 0.22 }}
+              className="md:hidden overflow-hidden border-t border-border"
               aria-label="Мобильная навигация"
             >
-              <div className="py-2">
+              <div className="py-1">
                 {[{ id: "hero", key: "home" }, ...links].map(({ id, key }) => (
                   <button
                     key={id}
                     onClick={() => scrollTo(id)}
-                    className="flex items-center justify-between w-full text-left px-1 py-3.5 text-[16px] font-medium border-b rule last:border-0 cursor-pointer"
+                    className="flex items-center justify-between w-full text-left py-2.5 text-[15px] font-medium border-b border-border last:border-0 cursor-pointer"
                   >
                     {t.nav[key as keyof typeof t.nav]}
-                    <span aria-hidden className="text-ink-faint">→</span>
+                    <span aria-hidden className="text-fg-muted text-[13px]">→</span>
                   </button>
                 ))}
               </div>

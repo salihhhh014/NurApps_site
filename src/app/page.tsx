@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   return <motion.div aria-hidden className="scroll-progress" style={{ scaleX }} />;
 }
 

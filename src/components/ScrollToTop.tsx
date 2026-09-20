@@ -26,17 +26,17 @@ export default function ScrollToTop() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, y: 12, scale: 0.92 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 8, scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 420, damping: 30 }}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 6 }}
+          transition={{ duration: 0.2 }}
           whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.92 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label={locale === "ru" ? "Наверх" : "Back to top"}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-ink dark:bg-paper text-paper dark:text-night rounded-full shadow-[0_12px_30px_-10px_rgba(0,0,0,0.5)] flex items-center justify-center"
+          className="fixed bottom-5 right-5 z-50 w-10 h-10 bg-fg text-bg rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.2)] flex items-center justify-center cursor-pointer"
         >
-          <ArrowUp className="w-5 h-5" aria-hidden />
+          <ArrowUp className="w-4 h-4" aria-hidden />
         </motion.button>
       )}
     </AnimatePresence>

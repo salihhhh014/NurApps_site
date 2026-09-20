@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const display = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 const body = Inter({
   subsets: ["latin", "latin-ext", "cyrillic"],
@@ -49,7 +43,7 @@ export default function RootLayout({
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
       </head>
       <body
-        className={`${display.variable} ${body.variable} ${mono.variable} bg-paper text-ink antialiased`}
+        className={`${body.variable} ${mono.variable} bg-bg text-fg antialiased`}
       >
         <a href="#main" className="skip-link">
           Перейти к содержимому

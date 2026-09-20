@@ -5,55 +5,57 @@ import { Code2, ShieldCheck, Recycle, MessagesSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
 const icons = [Code2, ShieldCheck, Recycle, MessagesSquare];
-const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function About() {
   const { t } = useI18n();
 
   return (
-    <section id="about" className="py-16 sm:py-24 border-t rule">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10">
+    <section id="about" className="py-16 sm:py-24 border-t border-border">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10">
         <motion.div
-          initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: EASE }}
+          transition={{ duration: 0.5, ease: EASE }}
         >
-          <h2 className="font-display font-semibold text-4xl sm:text-5xl tracking-tight leading-[1.05] mb-6">
+          <h2 className="text-[32px] sm:text-[40px] font-semibold tracking-[-0.025em] leading-tight mb-5">
             {t.about.title}
           </h2>
-          <p className="font-display text-[20px] leading-relaxed text-ink-soft dark:text-[#cfc9b8] max-w-[44ch]">
+          <p className="text-[17px] leading-relaxed text-fg-secondary max-w-[44ch]">
             {t.about.content}
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
+          transition={{ duration: 0.5, delay: 0.08, ease: EASE }}
         >
-          <h3 className="font-semibold text-[17px] mb-3">{t.about.values_title}</h3>
-          <dl className="border-t rule">
+          <h3 className="text-[15px] font-semibold text-fg-secondary mb-3">
+            {t.about.values_title}
+          </h3>
+          <dl className="border-t border-border">
             {t.about.values.map((value, i) => {
               const Icon = icons[i % icons.length];
               const [head, ...rest] = value.split(" — ");
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: i * 0.06, ease: EASE }}
-                  className="flex gap-4 py-5 border-b rule last:border-0 group"
+                  transition={{ duration: 0.4, delay: i * 0.05, ease: EASE }}
+                  className="flex gap-4 py-5 border-b border-border last:border-0 group"
                 >
-                  <span className="w-10 h-10 shrink-0 rounded-xl border rule flex items-center justify-center bg-paper-deep/40 dark:bg-white/[0.04] group-hover:border-ink/20 dark:group-hover:border-white/20 transition-colors">
-                    <Icon className="w-5 h-5 text-pine dark:text-amber" aria-hidden />
+                  <span className="w-9 h-9 shrink-0 rounded-lg border border-border flex items-center justify-center bg-bg-secondary group-hover:border-border-strong transition-colors">
+                    <Icon className="w-4 h-4 text-fg-secondary" aria-hidden />
                   </span>
                   <div>
-                    <dt className="font-semibold text-[16px]">{head}</dt>
+                    <dt className="font-medium text-[15px]">{head}</dt>
                     {rest.length > 0 && (
-                      <dd className="text-[15px] text-ink-soft dark:text-[#cfc9b8] mt-0.5">{rest.join(" — ")}</dd>
+                      <dd className="text-[14px] text-fg-secondary mt-0.5">{rest.join(" — ")}</dd>
                     )}
                   </div>
                 </motion.div>
