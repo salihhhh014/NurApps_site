@@ -29,9 +29,6 @@ export default function Footer() {
             <Send className="w-3.5 h-3.5" aria-hidden />
             {t.footer.telegram}
           </a>
-          <a href="/admin" rel="nofollow" className="h-9 px-3.5 rounded-md font-medium text-[13px] text-fg-muted flex items-center hover:text-fg transition-colors">
-            /admin
-          </a>
         </nav>
       </div>
       <div className="border-t border-border">
